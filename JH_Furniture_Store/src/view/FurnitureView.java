@@ -41,19 +41,19 @@ public class FurnitureView {
 	public void setTable() {
 		table = new TableView<Furniture>();
 		
-		TableColumn<Furniture, String> IdColumn = new TableColumn<>("ID");
-		IdColumn.setCellValueFactory(new PropertyValueFactory<Furniture, String>("ID"));
+		TableColumn<Furniture, String> idColumn = new TableColumn<>("ID");
+		idColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		
 		TableColumn<Furniture, String> nameColumn = new TableColumn<>("Name");
-		nameColumn.setCellValueFactory(new PropertyValueFactory<Furniture, String>("name"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 		
 		TableColumn<Furniture, String> typeColumn = new TableColumn<>("Type");
-		typeColumn.setCellValueFactory(new PropertyValueFactory<Furniture, String>("type"));
+		typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 		
 		TableColumn<Furniture, Integer> priceColumn = new TableColumn<>("Price");
-		priceColumn.setCellValueFactory(new PropertyValueFactory<Furniture, Integer>("price"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 		
-	    IdColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.15));  // 15% of table width
+	    idColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.15));  // 15% of table width
 	    nameColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.35)); // 35% of table width
 	    typeColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.25)); // 25% of table width
 	    priceColumn.prefWidthProperty().bind(table.widthProperty().multiply(0.25)); // 25% of table width
@@ -64,10 +64,13 @@ public class FurnitureView {
 	    table.setMinWidth(700);
 	    table.setMinHeight(400);
 		
-		table.getColumns().add(IdColumn);
+		table.getColumns().add(idColumn);
 		table.getColumns().add(nameColumn);
 		table.getColumns().add(typeColumn);
 		table.getColumns().add(priceColumn);
+		
+		furniture_list.addAll(fm.getData());
+		table.getItems().addAll(furniture_list);
 	}
 
 	public void init() {
@@ -159,7 +162,7 @@ public class FurnitureView {
 
 	public void setScene(Scene scene) {
 		this.scene = scene;
-	}
+	}	
 
 	public BorderPane getMainLayout() {
 		return mainLayout;

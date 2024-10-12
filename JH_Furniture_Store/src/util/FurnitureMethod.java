@@ -3,9 +3,11 @@ package util;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Furniture;
 
@@ -17,10 +19,21 @@ public class FurnitureMethod {
 		Alert alert = new Alert(type);
 		alert.setContentText(content);
 		alert.setTitle("Error");
-		alert.show();
+		alert.showAndWait();
 	}
 	
-	public void addFurniture(TextField fiD, TextField fName, ComboBox<String> fType, TextField fPrice) {
+	public void insertData(String ID, String fName, String fType, Integer fPrice) {
+		String Query = String.format(
+				"INSERT INTO MsFurniture (FurnitureID, FurnitureName, FurnitureType, FurniturePrice) VALUES "
+				+ "('%s', '%s', '%s', '%d')"
+				, ID, fName, fType, fPrice);
+		
+		connect.execUpdate(Query);
+		
+		showAlert(AlertType.INFORMATION, "Data Added!");
+	}
+	
+	public void addFurniture(TableView<Furniture> table, ObservableList<Furniture> f_list, TextField fiD, TextField fName, ComboBox<String> fType, TextField fPrice) {
 		String ID, name, type;
 		Integer price = 0;
 		
@@ -48,6 +61,15 @@ public class FurnitureMethod {
 			showAlert(AlertType.ERROR, "Price is less than 0");
 			return;
 		}
+		
+		fName.setText("");
+		fPrice.setText("");
+		fType.getSelectionModel().select(0);
+		
+		insertData(ID, name, type, price);
+		
+		fiD.setText(getLastId());
+		refreshTable(f_list, table);
 	}
 	
 	public String getLastId(){
@@ -94,10 +116,17 @@ public class FurnitureMethod {
 				list_of_furniture.add(new Furniture(ID, fName, fType, fPrice));
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return list_of_furniture;
 	}
+	
+	public void refreshTable(ObservableList<Furniture> furniture_list, TableView<Furniture> table) {
+	    furniture_list.clear(); 
+	    furniture_list.addAll(getData());
+	    table.setItems(furniture_list);
+	}
+	
+	
 }

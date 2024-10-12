@@ -13,7 +13,7 @@ public class Controller {
 		this.method = new FurnitureMethod();
 		
 		this.view.getAddFurniture().setOnAction(e -> {
-			this.method.addFurniture(view.getIdField(), 
+			this.method.addFurniture(view.getTable(),view.getFurniture_list(), view.getIdField(), 
 					view.getNameField(), view.getFurnitureType(), 
 					view.getPriceField());
 		});

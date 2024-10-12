@@ -5,18 +5,20 @@ public class Furniture {
 	private String name;
 	private String type;
 	private Integer price;
-	public Furniture(String iD, String name, String type, Integer price) {
-		super();
-		ID = iD;
+	
+	public Furniture(String ID, String name, String type, Integer price) {
+		this.ID = ID;
 		this.name = name;
 		this.type = type;
 		this.price = price;
 	}
+	
+	
 	public String getID() {
 		return ID;
 	}
-	public void setID(String iD) {
-		ID = iD;
+	public void setID(String ID) {
+		this.ID = ID;
 	}
 	public String getName() {
 		return name;
